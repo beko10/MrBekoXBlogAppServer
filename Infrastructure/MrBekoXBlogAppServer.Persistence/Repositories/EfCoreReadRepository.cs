@@ -1,0 +1,84 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MrBekoXBlogAppServer.Application.Interfaces.Repositories;
+using MrBekoXBlogAppServer.Domain.Entities.Common;
+using MrBekoXBlogAppServer.Persistence.Context;
+using System.Linq.Expressions;
+
+namespace MrBekoXBlogAppServer.Persistence.Repositories;
+
+public  class EfCoreReadRepository<TEntity> : EfCoreRepositories<TEntity>, IReadRepository<TEntity> where TEntity : BaseEntity
+{
+    public EfCoreReadRepository(AppDbContext context) : base(context)
+    {
+    }
+
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbSet.CountAsync(cancellationToken);
+    }
+
+    public async Task<int> CountWhereAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    {
+        return await _dbSet.CountAsync(predicate, cancellationToken);
+    }
+
+    public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    {
+        return await _dbSet.AnyAsync(predicate, cancellationToken);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAll(bool tracking = true, CancellationToken cancellationToken = default)
+    {
+        var query = _dbSet.AsQueryable();   
+        if (!tracking)
+        {
+            query = query.AsNoTracking();
+        }
+        return await query.ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllWithIncludesAsync(params Expression<Func<TEntity, object>>[] includes)
+    {
+        var query = _dbSet.AsQueryable();   
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+        return await query.ToListAsync();
+    }
+
+    public async Task<TEntity> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    {
+        return await _dbSet.FindAsync(id, cancellationToken);
+    }
+
+    public async Task<TEntity> GetByIdWithIncludesAsync(string id, params Expression<Func<TEntity, object>>[] includes)
+    {
+        var query = _dbSet.AsQueryable();
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+        return await query.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> expression, bool tracking = true, CancellationToken cancellationToken = default)
+    {
+        var query = _dbSet.AsQueryable();
+        if (!tracking)
+        {
+            query = query.AsNoTracking();
+        }
+        return await query.FirstOrDefaultAsync(expression, cancellationToken);
+    }
+
+    public IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression, bool tracking = true, CancellationToken cancellationToken = default)
+    {
+        var query = _dbSet.AsQueryable();
+        if (!tracking)
+        {
+            query = query.AsNoTracking();
+        }
+        return query.Where(expression);
+    }
+}

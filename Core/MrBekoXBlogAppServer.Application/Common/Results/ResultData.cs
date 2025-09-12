@@ -1,0 +1,25 @@
+﻿using System.Collections.Immutable;
+
+namespace MrBekoXBlogAppServer.Application.Common.Results;
+
+public class ResultData<TData> : Result
+{
+    public TData? Data { get; }
+
+    private ResultData(bool isSuccess, string message, IReadOnlyList<string> errors, int statusCode, TData? data)
+        : base(isSuccess, message, errors, statusCode)
+    {
+        Data = data;
+    }
+
+    public static ResultData<TData> Success(TData data, string message = DefaultSuccessMessage, int statusCode = 200)
+        => new(true, message, ImmutableArray<string>.Empty, statusCode, data);
+
+    public static new ResultData<TData> Failure(string error, string message = DefaultFailureMessage, int statusCode = 400)
+        => new(false, message, ImmutableArray.Create(error), statusCode, default);
+
+    public static new ResultData<TData> Failure(IEnumerable<string> errors, string message = DefaultFailureMessage, int statusCode = 400)
+        => new(false, message, errors.ToImmutableArray(), statusCode, default);
+
+    public static implicit operator ResultData<TData>(TData data) => Success(data);
+}
