@@ -1,4 +1,4 @@
-﻿namespace MrBekoXBlogAppServer.Application.Features.Constants.GetByIdCategoryQueryConstants;
+﻿namespace MrBekoXBlogAppServer.Application.Features.Constants;
 
 public static class CategoryOperationResultMessages
 {

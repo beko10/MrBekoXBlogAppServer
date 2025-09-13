@@ -11,15 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\CategoryFeature\Commands\CreateCategoryCommand\" />
-    <Folder Include="Features\CategoryFeature\Commands\DeleteCategoryCommand\" />
-    <Folder Include="Features\CategoryFeature\Commands\UpdateCategoryCommand\" />
-    <Folder Include="Features\CategoryFeature\Queries\GetAllCategoryQuery\" />
-    <Folder Include="Features\CategoryFeature\Rules\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="15.0.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />

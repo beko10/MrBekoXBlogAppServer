@@ -29,7 +29,8 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -39,7 +40,30 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "31e68485-dac5-4ac2-a76d-72c80838a109",
+                            CategoryName = "Yazılım",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = "43b62264-27ed-45bc-8714-8a887c1d108b",
+                            CategoryName = "Teknoloji",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = "01c7b4fc-2898-4a80-af7f-b018311efc35",
+                            CategoryName = "Yaşam",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.ContactInfo", b =>
@@ -49,29 +73,45 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("MapUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactInfos");
+                    b.ToTable("ContactInfos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4ff33380-5726-4d98-ae0f-c3b3e0017928",
+                            Address = "İstanbul, Türkiye",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "info@blogapp.com",
+                            MapUrl = "https://maps.google.com/example",
+                            Phone = "+90 555 555 55 55",
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Message", b =>
@@ -88,25 +128,41 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Subject")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1a9d8ffd-7d66-44ed-bfb7-232720a18230",
+                            Content = "Sitenizi çok beğendim!",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "ahmet@example.com",
+                            IsRead = false,
+                            Name = "Ahmet Yılmaz",
+                            Subject = "Merhaba",
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Post", b =>
@@ -142,7 +198,8 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -151,7 +208,22 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "30b81e45-a012-440d-bf6f-1a56a2e3d50f",
+                            Author = "Berkay",
+                            CategoryId = "31e68485-dac5-4ac2-a76d-72c80838a109",
+                            Content = "ASP.NET Core 9 ile Minimal API ve Onion Architecture kullanımı...",
+                            CoverImageUrl = "/images/cover1.jpg",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            PostImageUrl = "/images/post1.jpg",
+                            PublishedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Title = "Minimal API ile Onion Architecture",
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.SocialMedia", b =>
@@ -164,22 +236,45 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
                     b.Property<string>("Icon")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("SocialMedias");
+                    b.ToTable("SocialMedias", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "09b72f9e-d1a2-40b4-802e-f81b3b2642ed",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Icon = "fa-github",
+                            Name = "GitHub",
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Url = "https://github.com/username"
+                        },
+                        new
+                        {
+                            Id = "740a685e-fe6e-4273-bf48-bfc517d5e8d2",
+                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Icon = "fa-linkedin",
+                            Name = "LinkedIn",
+                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Url = "https://linkedin.com/in/username"
+                        });
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Post", b =>

@@ -4,5 +4,5 @@ namespace MrBekoXBlogAppServer.Application.Features.CategoryFeature.Queries.GetB
 
 public class GetByIdCategoryQueryRequest : IRequest<GetByIdCategoryQueryResponse>
 {
-    public string? Id { get; set; }
+    public string Id { get; set; } = null!;
 }

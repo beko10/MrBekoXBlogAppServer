@@ -9,7 +9,5 @@ public abstract class BaseEntity
     protected BaseEntity()
     {
         Id = Guid.NewGuid().ToString();
-        CreatedDate = DateTime.UtcNow;
-        UpdatedDate = DateTime.UtcNow;
     }
 }

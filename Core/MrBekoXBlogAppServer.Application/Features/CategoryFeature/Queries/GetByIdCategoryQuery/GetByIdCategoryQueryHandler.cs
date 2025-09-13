@@ -2,7 +2,7 @@
 using MediatR;
 using MrBekoXBlogAppServer.Application.Common.Results;
 using MrBekoXBlogAppServer.Application.Features.CategoryFeature.DTOs;
-using MrBekoXBlogAppServer.Application.Features.Constants.GetByIdCategoryQueryConstants;
+using MrBekoXBlogAppServer.Application.Features.Constants;
 using MrBekoXBlogAppServer.Application.Interfaces.Repositories.CategoryRepository;
 using System.Net;
 

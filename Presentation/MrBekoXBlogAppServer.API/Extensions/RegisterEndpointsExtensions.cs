@@ -2,7 +2,7 @@
 
 namespace MrBekoXBlogAppServer.API.Extensions;
 
-public static class RegisterEndpoints
+public static class RegisterEndpointsExtensions
 {
     public static IEndpointRouteBuilder RegisterAllEndpoints(this IEndpointRouteBuilder app)
     {
