@@ -15,6 +15,10 @@ public class ResultData<TData> : Result
     public static ResultData<TData> Success(TData data, string message = DefaultSuccessMessage, int statusCode = 200)
         => new(true, message, ImmutableArray<string>.Empty, statusCode, data);
 
+    public static new ResultData<TData> Failure(string message = DefaultFailureMessage, int statusCode = 400)
+    => new(false, message, ImmutableArray<string>.Empty, statusCode, default);
+
+
     public static new ResultData<TData> Failure(string error, string message = DefaultFailureMessage, int statusCode = 400)
         => new(false, message, ImmutableArray.Create(error), statusCode, default);
 

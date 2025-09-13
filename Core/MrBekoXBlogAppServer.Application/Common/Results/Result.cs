@@ -24,6 +24,9 @@ public class Result
     public static Result Success(string message = DefaultSuccessMessage, int statusCode = 200)
         => new(true, message, ImmutableArray<string>.Empty, statusCode);
 
+    public static Result Failure(string message = DefaultFailureMessage, int statusCode = 400)
+    => new(false,message, ImmutableArray<string>.Empty, statusCode);
+
 
     public static Result Failure(string error, string message = DefaultFailureMessage, int statusCode = 400)
         => new(false, message, ImmutableArray.Create(error), statusCode);
@@ -31,6 +34,6 @@ public class Result
     public static Result Failure(IEnumerable<string> errors, string message = DefaultFailureMessage, int statusCode = 400)
         => new(false, message, errors.ToImmutableArray(), statusCode);
 
-  
+    
     public static implicit operator bool(Result result) => result.IsSuccess;
 }

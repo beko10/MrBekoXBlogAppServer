@@ -4,7 +4,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
     {
-        services.AddTransient<MrBekoXBlogAppServer.API.Middleware.ExceptionHandlingMiddleware>();
+        services.AddTransient<Middleware.ExceptionHandlingMiddleware>();
         return services;
     }
 }

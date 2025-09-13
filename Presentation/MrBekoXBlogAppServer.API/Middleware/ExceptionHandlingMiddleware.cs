@@ -1,4 +1,5 @@
-﻿using MrBekoXBlogAppServer.Application.Common.CustomExceptions;
+﻿using FluentValidation;
+using MrBekoXBlogAppServer.Application.Common.CustomExceptions;
 using System.Text.Json;
 
 namespace MrBekoXBlogAppServer.API.Middleware;
@@ -30,10 +31,17 @@ public sealed class ExceptionHandlingMiddleware(
         var problemDetails = exception switch
         {
             ValidationException validationEx => CreateProblemDetails(
-                context, 400, validationEx.Message, "VALIDATION_FAILED", validationEx.Errors),
+                context,
+                400,
+                "Validation failed",
+                "VALIDATION_FAILED",
+                validationEx.Errors.Select(e => e.ErrorMessage)),
 
             NotFoundException notFoundEx => CreateProblemDetails(
                 context, 404, notFoundEx.Message, "ENTITY_NOT_FOUND"),
+
+            NullReferenceException => CreateProblemDetails(
+                context, 400, "Required data is missing", "NULL_REFERENCE"),
 
             BusinessRuleException businessEx => CreateProblemDetails(
                 context, 422, businessEx.Message, "BUSINESS_RULE_VIOLATION"),
@@ -69,7 +77,8 @@ public sealed class ExceptionHandlingMiddleware(
                 context, 422, "Data integrity violation", "DATA_INTEGRITY_ERROR"),
 
             OutOfMemoryException or StackOverflowException
-            or ThreadAbortException or AccessViolationException => throw exception,
+            or ThreadAbortException or AccessViolationException
+            => CreateProblemDetails(context, 500, "Critical system error", "CRITICAL_ERROR"),
 
             AppException appEx => CreateProblemDetails(
                 context, appEx.StatusCode, appEx.Message, appEx.ErrorCode),
