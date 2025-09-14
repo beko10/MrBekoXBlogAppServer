@@ -17,9 +17,10 @@ public class DeleteCategoryCommandHandler(
     public async Task<DeleteCategoryCommandResponse> Handle(DeleteCategoryCommandRequest request, CancellationToken cancellationToken)
     {
         var businessRulesResult = await BusinessRuleEngine.RunAsync(
-            categoryBusinessRules.CategoryMustExist(request.Id),
-            categoryBusinessRules.CategoryCanNotBeDeletedIfHasPosts(request.Id)
+            () => categoryBusinessRules.CategoryMustExistAsync(request.Id),
+            () => categoryBusinessRules.CategoryCanNotBeDeletedIfHasPostsAsync(request.Id)
         );
+
 
         if (!businessRulesResult.IsSuccess)
         {

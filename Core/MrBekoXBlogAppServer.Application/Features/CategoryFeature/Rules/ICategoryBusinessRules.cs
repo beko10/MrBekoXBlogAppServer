@@ -8,11 +8,11 @@ public interface ICategoryBusinessRules
 
     Result CategoryNameLengthMustBeValid(string categoryName);
 
-    Task<Result> CategoryNameCannotBeDuplicated(string categoryName, string? excludedId = null);
+    Task<Result> CategoryNameCannotBeDuplicatedAsync(string categoryName, string? excludedId = null);
 
-    Task<Result> CategoryMustExist(string categoryId);
+    Task<Result> CategoryMustExistAsync(string categoryId);
 
-    Task<Result> CategoryCanNotBeDeletedIfHasPosts(string categoryId);
+    Task<Result> CategoryCanNotBeDeletedIfHasPostsAsync(string categoryId);
 
-    Task<Result> CategoryCountMustBeUnderLimit(int limit = 100);
+    Task<Result> CategoryCountMustBeUnderLimitAsync(int limit = 100);
 }

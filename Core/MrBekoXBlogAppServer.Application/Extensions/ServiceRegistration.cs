@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using MrBekoXBlogAppServer.Application.Behaviors;
+using MrBekoXBlogAppServer.Application.Features.CategoryFeature.Rules;
 using System.Reflection;
 
 namespace MrBekoXBlogAppServer.Application.Extensions;
@@ -22,6 +23,9 @@ public static class ServiceRegistration
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         });
+
+        // Business Rules
+        services.AddScoped<ICategoryBusinessRules, CategoryBusinessRules>();
 
         return services;
     }

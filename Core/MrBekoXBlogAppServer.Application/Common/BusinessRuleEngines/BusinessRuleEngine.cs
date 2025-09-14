@@ -18,15 +18,13 @@ public static class BusinessRuleEngine
         return Result.Success();
     }
 
-    public static async Task<Result> RunAsync(params Task<Result>[] rules)
+    public static async Task<Result> RunAsync(params Func<Task<Result>>[] rules)
     {
-        foreach(var rule in rules)
+        foreach (var rule in rules)
         {
-            var result = await rule;
+            var result = await rule();
             if (!result.IsSuccess)
-            {
                 return result;
-            }
         }
         return Result.Success();
     }

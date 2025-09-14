@@ -27,7 +27,7 @@ public class CategoryBusinessRules(ICategoryReadRepository _categoryReadReposito
         return Result.Success();
     }
 
-    public async Task<Result> CategoryNameCannotBeDuplicated(string categoryName, string? excludedId = null)
+    public async Task<Result> CategoryNameCannotBeDuplicatedAsync(string categoryName, string? excludedId = null)
     {
         var existingCategory = await _categoryReadRepository.GetSingleAsync(c =>
             c.CategoryName == categoryName &&
@@ -39,7 +39,7 @@ public class CategoryBusinessRules(ICategoryReadRepository _categoryReadReposito
         return Result.Success();
     }
 
-    public async Task<Result> CategoryMustExist(string categoryId)
+    public async Task<Result> CategoryMustExistAsync(string categoryId)
     {
         var category = await _categoryReadRepository.GetByIdAsync(categoryId);
 
@@ -49,7 +49,7 @@ public class CategoryBusinessRules(ICategoryReadRepository _categoryReadReposito
         return Result.Success();
     }
 
-    public async Task<Result> CategoryCanNotBeDeletedIfHasPosts(string categoryId)
+    public async Task<Result> CategoryCanNotBeDeletedIfHasPostsAsync(string categoryId)
     {
         var category = await _categoryReadRepository.GetByIdWithIncludesAsync(id:categoryId,tracking:false,includes:x=>x.Posts);
         if (category != null && category.Posts.Any())
@@ -58,7 +58,7 @@ public class CategoryBusinessRules(ICategoryReadRepository _categoryReadReposito
         return Result.Success();
     }
 
-    public async Task<Result> CategoryCountMustBeUnderLimit(int limit = 100)
+    public async Task<Result> CategoryCountMustBeUnderLimitAsync(int limit = 100)
     {
         var count = await _categoryReadRepository.CountAsync();
 

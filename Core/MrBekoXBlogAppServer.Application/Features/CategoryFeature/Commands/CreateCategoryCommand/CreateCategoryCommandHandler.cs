@@ -21,11 +21,12 @@ public class CreateCategoryCommandHandler(
         var mappedCategory = mapper.Map<Category>(request.CreateCommandCategoryDtoRequest);
 
         var ruleResult = await BusinessRuleEngine.RunAsync(
-            Task.FromResult(categoryBusinessRules.CategoryNameCannotBeEmpty(request.CreateCommandCategoryDtoRequest.Name)),
-            Task.FromResult(categoryBusinessRules.CategoryNameLengthMustBeValid(request.CreateCommandCategoryDtoRequest.Name)),
-            categoryBusinessRules.CategoryNameCannotBeDuplicated(request.CreateCommandCategoryDtoRequest.Name),
-            categoryBusinessRules.CategoryCountMustBeUnderLimit()
+            () => Task.FromResult(categoryBusinessRules.CategoryNameCannotBeEmpty(request.CreateCommandCategoryDtoRequest.CategoryName)),
+            () => Task.FromResult(categoryBusinessRules.CategoryNameLengthMustBeValid(request.CreateCommandCategoryDtoRequest.CategoryName)),
+            () => categoryBusinessRules.CategoryNameCannotBeDuplicatedAsync(request.CreateCommandCategoryDtoRequest.CategoryName),
+            () => categoryBusinessRules.CategoryCountMustBeUnderLimitAsync()
         );
+
 
         if (ruleResult.IsFailure)
         {

@@ -19,13 +19,16 @@ public class UpdateCategoryCommandHandler(
 {
     public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
     {
-        
+
         var businessRulesResult = await BusinessRuleEngine.RunAsync(
-            categoryBusinessRules.CategoryMustExist(request.UpdateCommandCategoryDtoRequest.Id),
-            Task.FromResult(categoryBusinessRules.CategoryNameCannotBeEmpty(request.UpdateCommandCategoryDtoRequest.CategoryName)),
-            Task.FromResult(categoryBusinessRules.CategoryNameLengthMustBeValid(request.UpdateCommandCategoryDtoRequest.CategoryName)),
-            categoryBusinessRules.CategoryNameCannotBeDuplicated(request.UpdateCommandCategoryDtoRequest.CategoryName, request.UpdateCommandCategoryDtoRequest.Id)
+            () => categoryBusinessRules.CategoryMustExistAsync(request.UpdateCommandCategoryDtoRequest.Id),
+            () => Task.FromResult(categoryBusinessRules.CategoryNameCannotBeEmpty(request.UpdateCommandCategoryDtoRequest.CategoryName)),
+            () => Task.FromResult(categoryBusinessRules.CategoryNameLengthMustBeValid(request.UpdateCommandCategoryDtoRequest.CategoryName)),
+            () => categoryBusinessRules.CategoryNameCannotBeDuplicatedAsync(
+             request.UpdateCommandCategoryDtoRequest.CategoryName,
+             request.UpdateCommandCategoryDtoRequest.Id)
         );
+
 
         if (businessRulesResult.IsFailure)
         {

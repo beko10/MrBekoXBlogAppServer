@@ -8,7 +8,7 @@ public class CreateCommandCategoryDtoValidator : AbstractValidator<CreateCommand
 {
     public CreateCommandCategoryDtoValidator()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.CategoryName)
             .NotEmpty().WithMessage(CategoryValidationMessages.CategoryIdRequired)
             .MaximumLength(100).WithMessage(CategoryValidationMessages.CategoryNameMaxLength);
     }
