@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
+using MrBekoXBlogAppServer.Application.Features.CategoryFeature.Constants;
 using MrBekoXBlogAppServer.Application.Features.CategoryFeature.DTOs;
-using MrBekoXBlogAppServer.Application.Features.Constants;
 
 namespace MrBekoXBlogAppServer.Application.Features.CategoryFeature.Validatiors;
 

@@ -1,4 +1,4 @@
-﻿namespace MrBekoXBlogAppServer.Application.Features.Constants;
+﻿namespace MrBekoXBlogAppServer.Application.Features.CategoryFeature.Constants;
 
 public class CategoryValidationMessages
 {
