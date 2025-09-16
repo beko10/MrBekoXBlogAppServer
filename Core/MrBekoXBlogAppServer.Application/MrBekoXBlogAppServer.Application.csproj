@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\ContactInfoFeatures\Mappings\" />
+    <Folder Include="Features\CommentFeature\" />
   </ItemGroup>
 
 </Project>

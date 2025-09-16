@@ -27,13 +27,22 @@ public  class EfCoreReadRepository<TEntity> : EfCoreRepositories<TEntity>, IRead
         return await _dbSet.AnyAsync(predicate, cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(bool tracking = true, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(
+        bool tracking = true,
+        bool autoInclude = true,
+        CancellationToken cancellationToken = default)
     {
         var query = _dbSet.AsQueryable();   
         if (!tracking)
         {
             query = query.AsNoTracking();
         }
+
+        if(autoInclude)
+        {
+            query = query.IgnoreAutoIncludes();
+        }
+        
         return await query.ToListAsync(cancellationToken);
     }
 
@@ -47,8 +56,22 @@ public  class EfCoreReadRepository<TEntity> : EfCoreRepositories<TEntity>, IRead
         return await query.ToListAsync();
     }
 
-    public async Task<TEntity> GetByIdAsync(string id, bool tracking = true,CancellationToken cancellationToken = default)
+    public async Task<TEntity> GetByIdAsync(
+        string id, bool tracking = true,
+        bool autoInclude = true, 
+        CancellationToken cancellationToken = default
+       )
     {
+        var query = _dbSet.AsQueryable();  
+        if (!tracking)
+        {
+            query = _dbSet.AsNoTracking();
+        }
+        if(autoInclude)
+        {
+            query = query.IgnoreAutoIncludes();
+        }
+
         return await _dbSet.FindAsync(id, cancellationToken);
     }
     public async Task<TEntity> GetByIdWithIncludesAsync(string id,bool tracker=false ,CancellationToken cancellationToken = default, params Expression<Func<TEntity, object>>[] includes)
@@ -67,13 +90,22 @@ public  class EfCoreReadRepository<TEntity> : EfCoreRepositories<TEntity>, IRead
 
 
 
-    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> expression, bool tracking = true, CancellationToken cancellationToken = default)
+    public async Task<TEntity> GetSingleAsync(
+        Expression<Func<TEntity, bool>> expression, 
+        bool tracking = true, 
+        bool autoInclude = true,
+        CancellationToken cancellationToken = default)
     {
         var query = _dbSet.AsQueryable();
         if (!tracking)
         {
             query = query.AsNoTracking();
         }
+        if(autoInclude)
+        {
+            query = query.IgnoreAutoIncludes();
+        }
+
         return await query.FirstOrDefaultAsync(expression, cancellationToken);
     }
 

@@ -14,7 +14,10 @@ public class GetByIdCategoryQueryHandler(ICategoryReadRepository _categoryReadRe
     {
         //fluent validation pipeline behavior
         //todo : Business Rules 
-        var hasCategory = await _categoryReadRepository.GetByIdAsync(id : request.Id, cancellationToken : cancellationToken);
+        var hasCategory = await _categoryReadRepository.GetByIdAsync(id : request.Id,
+            tracking: false,
+            autoInclude:true,
+            cancellationToken : cancellationToken);
 
         if(hasCategory is not null)
         {

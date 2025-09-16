@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using MrBekoXBlogAppServer.Application.Behaviors;
 using MrBekoXBlogAppServer.Application.Features.CategoryFeature.Rules;
-using MrBekoXBlogAppServer.Application.Features.ContactInfoFeatures.Rules;
+using MrBekoXBlogAppServer.Application.Features.ContactInfoFeature.Rules;
 using System.Reflection;
 
 namespace MrBekoXBlogAppServer.Application.Extensions;

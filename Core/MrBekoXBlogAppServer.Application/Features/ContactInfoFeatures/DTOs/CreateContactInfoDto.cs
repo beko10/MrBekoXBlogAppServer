@@ -1,9 +1,0 @@
-﻿namespace MrBekoXBlogAppServer.Application.Features.ContactInfoFeatures.DTOs;
-
-public class CreateContactInfoDto
-{
-    public string Address { get; set; } = null!;
-    public string Email { get; set; } = null!;
-    public string Phone { get; set; } = null!;
-    public string MapUrl { get; set; } = null!;
-}

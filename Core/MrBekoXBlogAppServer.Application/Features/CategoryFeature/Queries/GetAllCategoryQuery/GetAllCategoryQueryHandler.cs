@@ -12,7 +12,7 @@ public class GetAllCategoryQueryHandler(ICategoryReadRepository _categoryReadRep
 {
     public async Task<GetAllCategoryQueryResponse> Handle(GetAllCategoryQueryRequest request, CancellationToken cancellationToken)
     {
-        var categories = await _categoryReadRepository.GetAllAsync();
+        var categories = await _categoryReadRepository.GetAllAsync(tracking:false,autoInclude:true);
         var mappedCategories = _mapper.Map<IEnumerable<ResultCategoryQueryDto>>(categories);
 
         if (!mappedCategories.Any())
