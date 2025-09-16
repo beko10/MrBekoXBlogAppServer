@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using MrBekoXBlogAppServer.Application.Behaviors;
 using MrBekoXBlogAppServer.Application.Features.CategoryFeature.Rules;
+using MrBekoXBlogAppServer.Application.Features.ContactInfoFeatures.Rules;
 using System.Reflection;
 
 namespace MrBekoXBlogAppServer.Application.Extensions;
@@ -26,6 +27,7 @@ public static class ServiceRegistration
 
         // Business Rules
         services.AddScoped<ICategoryBusinessRules, CategoryBusinessRules>();
+        services.AddScoped<IContactInfoBusinessRules, ContactInfoBusinessRules>();
 
         return services;
     }

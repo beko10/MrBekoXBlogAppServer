@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MrBekoXBlogAppServer.Domain.Entities;
 using MrBekoXBlogAppServer.Domain.Entities.Common;
 
 namespace MrBekoXBlogAppServer.Persistence.Context;
 
-public sealed class AppDbContext : DbContext
+public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
 {
     public AppDbContext(DbContextOptions options) : base(options)
     {
@@ -16,6 +17,9 @@ public sealed class AppDbContext : DbContext
     public DbSet<ContactInfo> ContactInfos { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<SubComment> SubComments { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,7 +46,6 @@ public sealed class AppDbContext : DbContext
             }
             else if (entry.State == EntityState.Modified)
             {
-                // CreatedDate korunur
                 entry.Property(x => x.CreatedDate).IsModified = false;
                 entry.Entity.UpdatedDate = DateTime.UtcNow;
             }

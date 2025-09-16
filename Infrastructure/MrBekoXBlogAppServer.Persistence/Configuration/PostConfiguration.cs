@@ -2,29 +2,29 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MrBekoXBlogAppServer.Domain.Entities;
 
-namespace MrBekoXBlogAppServer.Persistence.Configuration;
-
 public class PostConfiguration : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
         builder.ToTable("Posts");
-
-        //Primary Key
         builder.HasKey(p => p.Id);
-        // Title zorunlu
+
         builder.Property(p => p.Title)
                .IsRequired()
                .HasMaxLength(200);
 
-        // Content zorunlu
-        builder.Property(p => p.Content)
-               .IsRequired();
+        builder.Property(p => p.Content).IsRequired();
 
-        // 1 Post → 1 Category
+        // Post → Category (Cascade)
         builder.HasOne(p => p.Category)
                .WithMany(c => c.Posts)
                .HasForeignKey(p => p.CategoryId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        // Post → User (Cascade bırakılabilir)
+        builder.HasOne(p => p.User)
+               .WithMany(u => u.Posts)
+               .HasForeignKey(p => p.UserId)
                .OnDelete(DeleteBehavior.Cascade);
 
         // Seed data
@@ -37,12 +37,12 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
                 Author = "Berkay",
                 CoverImageUrl = "/images/cover1.jpg",
                 PostImageUrl = "/images/post1.jpg",
-                PublishedDate = new DateTime(2025, 09, 13, 0, 0, 0, DateTimeKind.Utc), 
-                CategoryId = "31e68485-dac5-4ac2-a76d-72c80838a109",
-                CreatedDate = new DateTime(2025, 09, 13, 0, 0, 0, DateTimeKind.Utc),
-                UpdatedDate = new DateTime(2025, 09, 13, 0, 0, 0, DateTimeKind.Utc)
+                PublishedDate = new DateTime(2025, 09, 14, 0, 0, 0, DateTimeKind.Utc),
+                CategoryId = "a1e8c1f0-1f0c-4b77-9c7b-1d6b4a3c5e11",
+                UserId = "u1234567-89ab-cdef-0123-456789abcdef",
+                CreatedDate = new DateTime(2025, 09, 14, 0, 0, 0, DateTimeKind.Utc),
+                UpdatedDate = new DateTime(2025, 09, 14, 0, 0, 0, DateTimeKind.Utc)
             }
         );
     }
 }
-

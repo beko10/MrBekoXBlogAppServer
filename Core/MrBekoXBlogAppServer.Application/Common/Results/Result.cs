@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using MrBekoXBlogAppServer.Application.Common.CustomExceptions;
+using System.Collections.Immutable;
 
 namespace MrBekoXBlogAppServer.Application.Common.Results;
 
@@ -11,9 +12,9 @@ public class Result
     public bool IsFailure => !IsSuccess;
     public string Message { get; }
     public int StatusCode { get; }
-    public IReadOnlyList<string> Errors { get; }
+    public IReadOnlyList<AppException> Errors { get; }
 
-    protected Result(bool isSuccess, string message, IReadOnlyList<string> errors, int statusCode)
+    protected Result(bool isSuccess, string message, IReadOnlyList<AppException> errors, int statusCode)
     {
         IsSuccess = isSuccess;
         Message = message ?? throw new ArgumentNullException(nameof(message));
@@ -22,16 +23,16 @@ public class Result
     }
 
     public static Result Success(string message = DefaultSuccessMessage, int statusCode = 200)
-        => new(true, message, ImmutableArray<string>.Empty, statusCode);
+        => new(true, message, ImmutableArray<AppException>.Empty, statusCode);
 
     public static Result Failure(string message = DefaultFailureMessage, int statusCode = 400)
-    => new(false,message, ImmutableArray<string>.Empty, statusCode);
+    => new(false,message, ImmutableArray<AppException>.Empty, statusCode);
 
 
-    public static Result Failure(string error, string message = DefaultFailureMessage, int statusCode = 400)
+    public static Result Failure(AppException error, string message = DefaultFailureMessage, int statusCode = 400)
         => new(false, message, ImmutableArray.Create(error), statusCode);
 
-    public static Result Failure(IEnumerable<string> errors, string message = DefaultFailureMessage, int statusCode = 400)
+    public static Result Failure(IEnumerable<AppException> errors, string message = DefaultFailureMessage, int statusCode = 400)
         => new(false, message, errors.ToImmutableArray(), statusCode);
 
     

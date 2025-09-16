@@ -5,6 +5,6 @@ namespace MrBekoXBlogAppServer.Domain.Entities;
 public sealed class Category : BaseEntity
 {
     public string CategoryName { get; set; } = null!;
-    public IEnumerable<Post> Posts { get; set; } = [];
+    public ICollection<Post> Posts { get; set; } = [];
 
 }

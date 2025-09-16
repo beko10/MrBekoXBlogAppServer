@@ -22,6 +22,241 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.AppRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.AppUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "u1234567-89ab-cdef-0123-456789abcdef",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "SEED-CONCURRENCY-STAMP-123456789",
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "berkay@example.com",
+                            EmailConfirmed = false,
+                            FullName = "Berkay Beko",
+                            ImageUrl = "/images/users/berkay.jpg",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BERKAY@EXAMPLE.COM",
+                            NormalizedUserName = "BERKAY",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHfk2/3QXmQzYFJ4vGm8N9p7UgLJJ2cR4Ke9Z5xP6oK3w8T1sY2nH7qV5bF9jL4mE3==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "SEED-SECURITY-STAMP-123456789",
+                            TwoFactorEnabled = false,
+                            UserName = "berkay"
+                        });
+                });
+
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Category", b =>
                 {
                     b.Property<string>("Id")
@@ -45,24 +280,72 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "31e68485-dac5-4ac2-a76d-72c80838a109",
+                            Id = "a1e8c1f0-1f0c-4b77-9c7b-1d6b4a3c5e11",
                             CategoryName = "Yazılım",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            Id = "43b62264-27ed-45bc-8714-8a887c1d108b",
+                            Id = "b2f9d2e1-2f1d-4c88-8d8c-2e7c5b4d6f22",
                             CategoryName = "Teknoloji",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            Id = "01c7b4fc-2898-4a80-af7f-b018311efc35",
-                            CategoryName = "Yaşam",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                            Id = "c3a0e3f2-3f2e-4d99-9e9d-3f8d6c7e8f33",
+                            CategoryName = ".Net",
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CommentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c1e8d2f0-2f0c-4a77-9c7b-1d6b4a3c5e22",
+                            CommentDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Content = "Çok faydalı bir yazı olmuş!",
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            PostId = "30b81e45-a012-440d-bf6f-1a56a2e3d50f",
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserId = "u1234567-89ab-cdef-0123-456789abcdef"
                         });
                 });
 
@@ -106,11 +389,11 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                         {
                             Id = "4ff33380-5726-4d98-ae0f-c3b3e0017928",
                             Address = "İstanbul, Türkiye",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "info@blogapp.com",
                             MapUrl = "https://maps.google.com/example",
                             Phone = "+90 555 555 55 55",
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -156,12 +439,12 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                         {
                             Id = "1a9d8ffd-7d66-44ed-bfb7-232720a18230",
                             Content = "Sitenizi çok beğendim!",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "ahmet@example.com",
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "omerfarukdogan@example.com",
                             IsRead = false,
-                            Name = "Ahmet Yılmaz",
+                            Name = "Ömer Faruk Doğan",
                             Subject = "Merhaba",
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -204,9 +487,15 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts", (string)null);
 
@@ -215,14 +504,15 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                         {
                             Id = "30b81e45-a012-440d-bf6f-1a56a2e3d50f",
                             Author = "Berkay",
-                            CategoryId = "31e68485-dac5-4ac2-a76d-72c80838a109",
+                            CategoryId = "a1e8c1f0-1f0c-4b77-9c7b-1d6b4a3c5e11",
                             Content = "ASP.NET Core 9 ile Minimal API ve Onion Architecture kullanımı...",
                             CoverImageUrl = "/images/cover1.jpg",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             PostImageUrl = "/images/post1.jpg",
-                            PublishedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            PublishedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Title = "Minimal API ile Onion Architecture",
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserId = "u1234567-89ab-cdef-0123-456789abcdef"
                         });
                 });
 
@@ -260,21 +550,138 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                         new
                         {
                             Id = "09b72f9e-d1a2-40b4-802e-f81b3b2642ed",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Icon = "fa-github",
                             Name = "GitHub",
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Url = "https://github.com/username"
                         },
                         new
                         {
                             Id = "740a685e-fe6e-4273-bf48-bfc517d5e8d2",
-                            CreatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Icon = "fa-linkedin",
                             Name = "LinkedIn",
-                            UpdatedDate = new DateTime(2025, 9, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Url = "https://linkedin.com/in/username"
                         });
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.SubComment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CommentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CommentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SubComments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "s1e8d2f0-3f0c-4a77-9c7b-1d6b4a3c5e33",
+                            CommentDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CommentId = "c1e8d2f0-2f0c-4a77-9c7b-1d6b4a3c5e22",
+                            Content = "Ben de katılıyorum!",
+                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserId = "u1234567-89ab-cdef-0123-456789abcdef"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Comment", b =>
+                {
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppUser", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Post", b =>
@@ -285,12 +692,58 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppUser", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.SubComment", b =>
+                {
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.Comment", "Comment")
+                        .WithMany("SubComments")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MrBekoXBlogAppServer.Domain.Entities.AppUser", "User")
+                        .WithMany("SubComments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.AppUser", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Posts");
+
+                    b.Navigation("SubComments");
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Comment", b =>
+                {
+                    b.Navigation("SubComments");
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

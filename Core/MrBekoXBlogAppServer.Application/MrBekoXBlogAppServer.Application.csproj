@@ -19,16 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\ContactInfoFeatures\Commands\CreateContactInfoCommand\" />
-    <Folder Include="Features\ContactInfoFeatures\Commands\DeleteContactInfoCommand\" />
-    <Folder Include="Features\ContactInfoFeatures\Commands\UpdateContactInfoCommand\" />
-    <Folder Include="Features\ContactInfoFeatures\Constants\" />
-    <Folder Include="Features\ContactInfoFeatures\DTOs\" />
     <Folder Include="Features\ContactInfoFeatures\Mappings\" />
-    <Folder Include="Features\ContactInfoFeatures\Queries\GetAllContactInfoQuery\" />
-    <Folder Include="Features\ContactInfoFeatures\Queries\GetByIdContactInfoQuery\" />
-    <Folder Include="Features\ContactInfoFeatures\Validators\" />
-    <Folder Include="Features\ContactInfoFeatures\Rules\" />
   </ItemGroup>
 
 </Project>
