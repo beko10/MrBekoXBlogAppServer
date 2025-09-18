@@ -13,6 +13,7 @@ public interface IReadRepository<TEntity> : IRepository<TEntity> where TEntity :
     IQueryable<TEntity> GetWhere(
         Expression<Func<TEntity, bool>> expression, 
         bool tracking = true, 
+        bool autoInclude = true,
         CancellationToken cancellationToken = default
        );
     Task<TEntity> GetSingleAsync(
@@ -33,6 +34,7 @@ public interface IReadRepository<TEntity> : IRepository<TEntity> where TEntity :
        );
     Task<IEnumerable<TEntity>> GetAllWithIncludesAsync(
         bool tracking = true, 
+        CancellationToken cancellationToken = default,
         params Expression<Func<TEntity, object>>[] includes
         );
 

@@ -19,7 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\CommentFeature\" />
+    <Folder Include="Features\CommentFeature\Commands\CreateCommentCommand\" />
+    <Folder Include="Features\CommentFeature\Commands\DeleteCommentCommand\" />
+    <Folder Include="Features\CommentFeature\Commands\UpdateCommentCommand\" />
+    <Folder Include="Features\CommentFeature\Constants\" />
+    <Folder Include="Features\CommentFeature\Queries\GetAllCommentQuery\" />
+    <Folder Include="Features\CommentFeature\Queries\GetByIdCommentQuery\" />
+    <Folder Include="Features\CommentFeature\Validators\" />
+    <Folder Include="Features\CommentFeature\Rules\" />
   </ItemGroup>
 
 </Project>
