@@ -89,7 +89,7 @@ public  class EfCoreReadRepository<TEntity> : EfCoreRepositories<TEntity>, IRead
             query = query.IgnoreAutoIncludes();
         }
 
-        return await _dbSet.FindAsync(id, cancellationToken);
+        return await _dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
     public async Task<TEntity> GetByIdWithIncludesAsync(
         string id,bool tracker=false ,

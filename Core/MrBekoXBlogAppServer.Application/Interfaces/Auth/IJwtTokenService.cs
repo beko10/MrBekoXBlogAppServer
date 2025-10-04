@@ -6,5 +6,10 @@ public interface IJwtTokenService
 {
     Task<TokenDto> CreateAccessTokenAsync(
         string userId, 
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken = default
+      );
+
+    Task<TokenDto> RefreshAsync(string refreshTokenRaw, 
+        CancellationToken cancellationToken = default
+      );
 }

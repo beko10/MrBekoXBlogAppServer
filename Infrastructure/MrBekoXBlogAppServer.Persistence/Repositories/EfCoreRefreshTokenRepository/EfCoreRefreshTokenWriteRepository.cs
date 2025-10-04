@@ -13,11 +13,16 @@ public class EfCoreRefreshTokenWriteRepository : EfCoreWriteRepository<RefreshTo
 
     public async Task RevokeAllAsync(string userId, string reason, CancellationToken cancellationToken = default)
     {
-        var tokens = await _dbSet.Where(rt => rt.UserId == userId && rt.RevokedAt == null && rt.ExpiresAt > DateTime.UtcNow).ToListAsync(cancellationToken);
-        foreach (var token in tokens)
-        {
-            token.RevokedAt = DateTime.UtcNow;
-            token.RevokedReason = reason;
-        }
+        // Belleğe çekmeden, doğrudan veritabanında UPDATE sorgusu çalıştır.
+        await _dbSet
+            .Where(rt => rt.UserId == userId && 
+                rt.RevokedAt == null && 
+                rt.ExpiresAt > DateTime.UtcNow
+            )
+            .ExecuteUpdateAsync(updates => updates
+                .SetProperty(rt => rt.RevokedAt, DateTime.UtcNow)
+                .SetProperty(rt => rt.RevokedReason, reason),
+                cancellationToken
+             );
     }
 }
