@@ -19,6 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\AuthFeature\Constants\" />
+    <Folder Include="Features\AuthFeature\Mappings\" />
+    <Folder Include="Features\AuthFeature\Validatiors\" />
+    <Folder Include="Features\AuthFeature\Rules\" />
+    <Folder Include="Features\AuthFeature\Queries\" />
     <Folder Include="Features\CommentFeature\Commands\CreateCommentCommand\" />
     <Folder Include="Features\CommentFeature\Commands\DeleteCommentCommand\" />
     <Folder Include="Features\CommentFeature\Commands\UpdateCommentCommand\" />

@@ -8,11 +8,11 @@ public class Result
     protected const string DefaultSuccessMessage = "Operation completed successfully.";
     protected const string DefaultFailureMessage = "Operation failed.";
 
-    public bool IsSuccess { get; }
+    public bool IsSuccess { get; init; }
     public bool IsFailure => !IsSuccess;
-    public string Message { get; }
-    public int StatusCode { get; }
-    public IReadOnlyList<AppException> Errors { get; }
+    public string Message { get; init; }
+    public int StatusCode { get; init; }
+    public IReadOnlyList<AppException> Errors { get; init; }
 
     protected Result(bool isSuccess, string message, IReadOnlyList<AppException> errors, int statusCode)
     {
@@ -35,6 +35,7 @@ public class Result
     public static Result Failure(IEnumerable<AppException> errors, string message = DefaultFailureMessage, int statusCode = 400)
         => new(false, message, errors.ToImmutableArray(), statusCode);
 
-    
+
+
     public static implicit operator bool(Result result) => result.IsSuccess;
 }
