@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\MrBekoXBlogAppServer.Application\MrBekoXBlogAppServer.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\MrBekoXBlogAppServer.Infrastructure\MrBekoXBlogAppServer.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MrBekoXBlogAppServer.Persistence\MrBekoXBlogAppServer.Persistence.csproj" />
   </ItemGroup>
 

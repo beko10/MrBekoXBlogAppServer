@@ -16,12 +16,14 @@
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Features\AuthFeature\Constants\" />
     <Folder Include="Features\AuthFeature\Mappings\" />
-    <Folder Include="Features\AuthFeature\Validatiors\" />
     <Folder Include="Features\AuthFeature\Rules\" />
     <Folder Include="Features\AuthFeature\Queries\" />
     <Folder Include="Features\CommentFeature\Commands\CreateCommentCommand\" />

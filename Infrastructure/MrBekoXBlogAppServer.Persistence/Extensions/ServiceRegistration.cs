@@ -18,7 +18,7 @@ namespace MrBekoXBlogAppServer.Persistence.Extensions
         {
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging();
             });
 
             services.AddIdentity<AppUser, AppRole>(options =>
@@ -59,7 +59,9 @@ namespace MrBekoXBlogAppServer.Persistence.Extensions
 
             // === UnitOfWork ===
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
 
+            
             return services;
         }
     }

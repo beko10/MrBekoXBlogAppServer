@@ -9,7 +9,7 @@ public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
 {
     public AppDbContext(DbContextOptions options) : base(options)
     {
-        
+
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -19,26 +19,15 @@ public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<SocialMedia> SocialMedias { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<SubComment> SubComments { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
-        //AppUser → Posts, Comments, SubComments
-        modelBuilder.Entity<AppUser>()
-            .Navigation(u => u.Posts)
-            .AutoInclude();
-
-        modelBuilder.Entity<AppUser>()
-            .Navigation(u => u.Comments)
-            .AutoInclude();
-
-        modelBuilder.Entity<AppUser>()
-            .Navigation(u => u.SubComments)
-            .AutoInclude();
-
-        //Post → Category, User, Comments
         modelBuilder.Entity<Post>()
             .Navigation(p => p.Category)
             .AutoInclude();
@@ -47,11 +36,6 @@ public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
             .Navigation(p => p.User)
             .AutoInclude();
 
-        modelBuilder.Entity<Post>()
-            .Navigation(p => p.Comments)
-            .AutoInclude();
-
-        //Comment → Post, User, SubComments
         modelBuilder.Entity<Comment>()
             .Navigation(c => c.Post)
             .AutoInclude();
@@ -60,11 +44,8 @@ public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
             .Navigation(c => c.User)
             .AutoInclude();
 
-        modelBuilder.Entity<Comment>()
-            .Navigation(c => c.SubComments)
-            .AutoInclude();
 
-        //SubComment → Comment, User
+
         modelBuilder.Entity<SubComment>()
             .Navigation(sc => sc.Comment)
             .AutoInclude();
@@ -73,12 +54,7 @@ public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
             .Navigation(sc => sc.User)
             .AutoInclude();
 
-        //Category → Posts (opsiyonel, sık lazımsa açabilirsin)
-        modelBuilder.Entity<Category>()
-            .Navigation(c => c.Posts)
-            .AutoInclude();
 
-        base.OnModelCreating(modelBuilder);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

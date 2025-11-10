@@ -12,7 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace MrBekoXBlogAppServer.Infrastructure.Auth; 
+namespace MrBekoXBlogAppServer.Infrastructure.Auth;
 
 
 public sealed class JwtTokenService(
@@ -39,12 +39,15 @@ public sealed class JwtTokenService(
     // === ORTAK TOKEN ÜRETİMİ (login & refresh) ===
     // Bu özel (private) metot, hem login hem de refresh işlemlerinde token çifti (access + refresh) üretmek için kullanılır.
     // Kod tekrarını önler.
-    
+
 
     // === LOGIN: Access + Refresh üretir ===
     // Kullanıcı girişi (login) başarılı olduğunda bu metot çağrılır.
     public async Task<TokenDto> CreateAccessTokenAsync(
         string userId,
+        string? deviceInfo = null,
+        string? ipAddress = null,
+        string? userAgent = null,
         CancellationToken cancellationToken = default)
     {
         // Verilen ID ile kullanıcıyı veritabanında bulur.
@@ -57,6 +60,9 @@ public sealed class JwtTokenService(
         return await GenerateTokenPairInternalAsync(
             user,
             revokeAllExistingRefreshTokens: RevokeExistingRefreshTokensOnLogin,
+            deviceInfo,
+            ipAddress,
+            userAgent,
             cancellationToken);
     }
 
@@ -116,17 +122,24 @@ public sealed class JwtTokenService(
         // 4) Yeni bir token çifti (access + refresh) üretiriz.
         // Bu sefer 'revokeAllExistingRefreshTokens' parametresine `false` geçilir çünkü bu bir refresh işlemidir,
         // kullanıcının diğer cihazlardaki oturumlarını kapatmak istemeyiz.
+        // Refresh işleminde device bilgileri eski token'dan alınır
         var pair = await GenerateTokenPairInternalAsync(
             user,
             revokeAllExistingRefreshTokens: false,
+            deviceInfo: used.DeviceInfo,
+            ipAddress: used.IpAddress,
+            userAgent: used.UserAgent,
             cancellationToken);
 
         // 5) ROTASYON: Eski (az önce kullanılan) token'ı geçersiz kılarız.
         // İptal zamanını şu an olarak ayarla.
         used.RevokedAt = now;
 
-        // İptal nedenini "rote edildi" olarak belirt.
+        // İptal nedenini "rotated" olarak belirt.
         used.RevokedReason = "Rotated";
+
+        // Son kullanım zamanını güncelle
+        used.LastUsedAt = now;
 
         // Eski token'ı, yerine geçen yeni token'a bağlarız. Bu, token ailesini takip etmeyi sağlar.
         used.ReplacedByTokenHash = TokenHasher.HashToken(pair.RefreshToken.Token);
@@ -147,7 +160,11 @@ public sealed class JwtTokenService(
         AppUser user,
         // Kullanıcının mevcut tüm refresh token'ları iptal edilsin mi?
         bool revokeAllExistingRefreshTokens,
-        CancellationToken cancellationToken)
+        // Device tracking bilgileri
+        string? deviceInfo = null,
+        string? ipAddress = null,
+        string? userAgent = null,
+        CancellationToken cancellationToken = default)
     {
         // Tüm zaman damgaları için sunucu saatini UTC (Evrensel Zaman) olarak alır. Bu, zaman dilimi sorunlarını önler.
         var now = DateTime.UtcNow;
@@ -233,7 +250,13 @@ public sealed class JwtTokenService(
 
             // Henüz iptal edilmedi.
             RevokedAt = null,
-            RevokedReason = null
+            RevokedReason = null,
+
+            // Device tracking bilgileri
+            DeviceInfo = deviceInfo,
+            IpAddress = ipAddress,
+            UserAgent = userAgent,
+            LastUsedAt = now
         };
 
         // Yeni refresh token'ı veritabanına eklemek üzere EF Core'un Change Tracker'ına ekler.

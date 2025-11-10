@@ -17,7 +17,7 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.8")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -183,7 +183,6 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -234,27 +233,6 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "u1234567-89ab-cdef-0123-456789abcdef",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "SEED-CONCURRENCY-STAMP-123456789",
-                            CreatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "berkay@example.com",
-                            EmailConfirmed = false,
-                            FullName = "Berkay Beko",
-                            ImageUrl = "/images/users/berkay.jpg",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "BERKAY@EXAMPLE.COM",
-                            NormalizedUserName = "BERKAY",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHfk2/3QXmQzYFJ4vGm8N9p7UgLJJ2cR4Ke9Z5xP6oK3w8T1sY2nH7qV5bF9jL4mE3==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "SEED-SECURITY-STAMP-123456789",
-                            TwoFactorEnabled = false,
-                            UserName = "berkay"
-                        });
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.Category", b =>
@@ -514,6 +492,54 @@ namespace MrBekoXBlogAppServer.Persistence.Migrations
                             UpdatedDate = new DateTime(2025, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             UserId = "u1234567-89ab-cdef-0123-456789abcdef"
                         });
+                });
+
+            modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeviceInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastUsedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReplacedByTokenHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RevokedReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserAgent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("MrBekoXBlogAppServer.Domain.Entities.SocialMedia", b =>

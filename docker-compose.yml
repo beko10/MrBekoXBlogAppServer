@@ -1,0 +1,61 @@
+services:
+  # SQL Server Container
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: blogapp-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Password123
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - blogapp-network
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P YourStrong@Password123 -C -Q 'SELECT 1' || exit 1"]
+      interval: 20s
+      timeout: 15s
+      retries: 30
+      start_period: 120s 
+
+  # API Container
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blogapp-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MrBekoXBlogAppDb;User Id=sa;Password=YourStrong@Password123;TrustServerCertificate=True;MultipleActiveResultSets=True;Connect Timeout=30;Application Intent=ReadWrite
+      - Jwt__SecretKey=kX9#mPqW2nL5jR8$$vT3zY6bF1cH4aK7D9
+      - Jwt__Issuer=MrBekoXBlogAppServer
+      - Jwt__Audience__0=MrBekoXBlogApp.PublicAPI
+      - Jwt__AccessTokenExpirationMinutes=15
+      - Jwt__RefreshTokenExpirationDays=30
+      - SessionManagement__MaxConcurrentSessions=5
+      - SessionManagement__EnableDeviceTracking=true
+      - Email__SmtpHost=smtp.gmail.com
+      - Email__SmtpPort=587
+      - Email__SmtpUsername=your-email@gmail.com
+      - Email__SmtpPassword=your-app-password
+      - Email__FromEmail=your-email@gmail.com
+      - Email__FromName=MrBekoX Blog
+      - Email__EnableSsl=true
+    depends_on:
+      sqlserver:
+        condition: service_healthy  
+    networks:
+      - blogapp-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+
+networks:
+  blogapp-network:
+    driver: bridge
